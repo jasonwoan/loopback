@@ -111,9 +111,11 @@ describe('access control - integration', function() {
           assert.equal(user.password, undefined);
         });
       });
-      lt.describe.whenCalledRemotely('PUT', '/api/users/:id', function() {
-        lt.it.shouldBeAllowed();
-      });
+      // It would be valid only if model.settings.updateOnPUT is true
+      //
+      //lt.describe.whenCalledRemotely('PUT', '/api/users/:id', function() {
+      //  lt.it.shouldBeAllowed();
+      //});
     });
 
     lt.it.shouldBeDeniedWhenCalledAnonymously('DELETE', urlForUser);
@@ -210,6 +212,9 @@ describe('access control - integration', function() {
         });
       });
 
+      lt.describe.whenCalledRemotely('PATCH', '/api/accounts/:id', function() {
+        lt.it.shouldBeAllowed();
+      });
       lt.describe.whenCalledRemotely('PUT', '/api/accounts/:id', function() {
         lt.it.shouldBeAllowed();
       });
